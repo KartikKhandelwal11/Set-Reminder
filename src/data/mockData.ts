@@ -11,8 +11,8 @@ export const mockAccounts: Account[] = [
     dueDate: '12th Sep',
     lastPaymentAmount: 100000,
     lastPaymentDate: '30th Dec',
-    isReminderEnabled: false,
-    reminderDay: null,
+    isReminderEnabled: true,
+    reminderDay: 10,
     colorHex: '#0072BC',
     logoUrl: `${import.meta.env.BASE_URL}logos/SBI-Logo.png`
   },
@@ -90,8 +90,8 @@ export const mockAccounts: Account[] = [
     last4Digits: '9001',
     billAmount: 999,
     dueDate: '5th Oct',
-    isReminderEnabled: true,
-    reminderDay: 5,
+    isReminderEnabled: false,
+    reminderDay: null,
     colorHex: '#E11D48',
     logoUrl: 'https://logo.clearbit.com/jio.com'
   }

@@ -202,7 +202,7 @@ export default function ReminderScreen() {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
   const [tempSelectedDay, setTempSelectedDay] = useState<number | null>(null);
-  const [imageError, setImageError] = useState<Record<string, boolean>>({});
+  const [imageStatus, setImageStatus] = useState<Record<string, 'loading' | 'loaded' | 'error'>>({});
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -347,20 +347,22 @@ export default function ReminderScreen() {
                     <div className="p-5">
                       <div className="flex items-start gap-4 mb-3">
                         <div 
-                          className={cn("flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-[16px] font-bold shadow-[0_2px_8px_rgba(0,0,0,0.04)] overflow-hidden transition-colors",
-                            (!account.logoUrl || imageError[account.id]) ? "text-white" : "bg-white border border-gray-100/50"
+                          className={cn("flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-[16px] font-bold shadow-[0_2px_8px_rgba(0,0,0,0.04)] overflow-hidden transition-colors relative text-white",
+                            (account.logoUrl && imageStatus[account.id] === 'loaded') ? "bg-white border border-gray-100/50" : ""
                           )}
-                          style={(!account.logoUrl || imageError[account.id]) ? { backgroundColor: account.colorHex } : undefined}
+                          style={!(account.logoUrl && imageStatus[account.id] === 'loaded') ? { backgroundColor: account.colorHex } : undefined}
                         >
-                          {account.logoUrl && !imageError[account.id] ? (
+                          {account.logoUrl && imageStatus[account.id] !== 'error' && (
                             <img 
                               src={account.logoUrl} 
                               alt={account.bankName} 
-                              className="w-full h-full object-contain p-[9px]" 
-                              onError={() => setImageError(prev => ({...prev, [account.id]: true}))}
+                              className={cn("absolute inset-0 w-full h-full object-contain p-[9px] transition-opacity duration-300", imageStatus[account.id] === 'loaded' ? 'opacity-100' : 'opacity-0')} 
+                              onLoad={() => setImageStatus(prev => ({...prev, [account.id]: 'loaded'}))}
+                              onError={() => setImageStatus(prev => ({...prev, [account.id]: 'error'}))}
                               referrerPolicy="no-referrer"
                             />
-                          ) : getAccountIconSVG(account.type)}
+                          )}
+                          {!(account.logoUrl && imageStatus[account.id] === 'loaded') && getAccountIconSVG(account.type)}
                         </div>
                         
                         <div className="flex-1 mt-0.5">
@@ -442,19 +444,22 @@ export default function ReminderScreen() {
               {/* Selected Account Info */}
               <div className="mb-2.5 rounded-[16px] bg-[#F8F9FA] p-2.5 border border-gray-100 flex items-center gap-3">
               <div 
-                className={cn("flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] font-bold shadow-[0_4px_10px_rgba(0,0,0,0.05)] overflow-hidden transition-colors",
-                  (!selectedAccount.logoUrl || imageError[selectedAccount.id]) ? "text-white text-[10px]" : "bg-white border border-gray-100"
+                className={cn("flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] font-bold shadow-[0_4px_10px_rgba(0,0,0,0.05)] overflow-hidden transition-colors relative text-white text-[10px]",
+                  (selectedAccount.logoUrl && imageStatus[selectedAccount.id] === 'loaded') ? "bg-white border border-gray-100" : ""
                 )}
-                style={(!selectedAccount.logoUrl || imageError[selectedAccount.id]) ? { backgroundColor: selectedAccount.colorHex } : undefined}
+                style={!(selectedAccount.logoUrl && imageStatus[selectedAccount.id] === 'loaded') ? { backgroundColor: selectedAccount.colorHex } : undefined}
               >
-                {selectedAccount.logoUrl && !imageError[selectedAccount.id] ? (
+                {selectedAccount.logoUrl && imageStatus[selectedAccount.id] !== 'error' && (
                   <img 
                     src={selectedAccount.logoUrl} 
                     alt={selectedAccount.bankName} 
-                    className="w-full h-full object-contain p-[5px]" 
+                    className={cn("absolute inset-0 w-full h-full object-contain p-[5px] transition-opacity duration-300", imageStatus[selectedAccount.id] === 'loaded' ? 'opacity-100' : 'opacity-0')} 
+                    onLoad={() => setImageStatus(prev => ({...prev, [selectedAccount.id]: 'loaded'}))}
+                    onError={() => setImageStatus(prev => ({...prev, [selectedAccount.id]: 'error'}))}
                     referrerPolicy="no-referrer"
                   />
-                ) : getAccountIconSVG(selectedAccount.type)}
+                )}
+                {!(selectedAccount.logoUrl && imageStatus[selectedAccount.id] === 'loaded') && getAccountIconSVG(selectedAccount.type)}
               </div>
               <div>
                 <h3 className="text-[15px] font-bold text-gray-900 leading-tight">{selectedAccount.bankName}</h3>
