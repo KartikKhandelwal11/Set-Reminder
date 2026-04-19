@@ -434,12 +434,13 @@ export default function ReminderScreen() {
       {/* Set Reminder Bottom Sheet */}
       <BottomSheet isOpen={isSheetOpen} onClose={() => setIsSheetOpen(false)}>
         {selectedAccount && (
-          <div className="animate-in fade-in slide-in-from-bottom-4 duration-300 pb-2">
-            <h2 className="mb-1 text-center text-[20px] font-bold text-gray-900 mt-2 tracking-tight">Set Reminder</h2>
-            <p className="text-center text-gray-500 text-[14px] font-medium mb-4">Select a day of the month to be notified.</p>
-            
-            {/* Selected Account Info */}
-            <div className="mb-4 rounded-[16px] bg-[#F8F9FA] p-3 border border-gray-100 flex items-center gap-4">
+          <div className="animate-in fade-in slide-in-from-bottom-4 duration-300 flex flex-col justify-between h-full">
+            <div>
+              <h2 className="mb-0.5 text-center text-[18px] font-bold text-gray-900 mt-1 tracking-tight">Set Reminder</h2>
+              <p className="text-center text-gray-500 text-[13px] font-medium mb-2.5">Select a day of the month to be notified.</p>
+              
+              {/* Selected Account Info */}
+              <div className="mb-2.5 rounded-[16px] bg-[#F8F9FA] p-2.5 border border-gray-100 flex items-center gap-3">
               <div 
                 className={cn("flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] font-bold shadow-[0_4px_10px_rgba(0,0,0,0.05)] overflow-hidden transition-colors",
                   (!selectedAccount.logoUrl || imageError[selectedAccount.id]) ? "text-white text-[10px]" : "bg-white border border-gray-100"
@@ -464,9 +465,9 @@ export default function ReminderScreen() {
             </div>
 
             {/* Smart Tip depending on category */}
-            <div className="bg-[#F4F6FF] border border-[#1839FF]/10 rounded-[14px] p-3 mb-4 flex gap-3 shadow-sm items-start">
-                <div className="bg-[#1839FF]/10 text-[#1839FF] rounded-full w-5 h-5 flex items-center justify-center shrink-0 mt-0.5">
-                   <Lightbulb className="w-3 h-3 stroke-[2.5]" />
+            <div className="bg-[#F4F6FF] border border-[#1839FF]/10 rounded-[12px] p-2.5 mb-2.5 flex gap-2.5 shadow-sm items-start">
+                <div className="bg-[#1839FF]/10 text-[#1839FF] rounded-full w-4 h-4 flex items-center justify-center shrink-0 mt-[3px]">
+                   <Lightbulb className="w-2.5 h-2.5 stroke-[2.5]" />
                 </div>
                 <div>
                    <h4 className="font-bold text-[#1839FF] text-[13px]">Setup Advice</h4>
@@ -480,15 +481,15 @@ export default function ReminderScreen() {
                 </div>
             </div>
 
-            <div className="mb-3 flex items-center justify-between">
+            <div className="mb-2 flex items-center justify-between">
               <div>
-                 <h4 className="font-bold text-gray-900 text-[15px]">Select Alert Date</h4>
-                 <p className="text-[12px] text-gray-400 font-medium mt-0.5">Every month on this date</p>
+                 <h4 className="font-bold text-gray-900 text-[14px]">Select Alert Date</h4>
+                 <p className="text-[11px] text-gray-400 font-medium">Every month on this date</p>
               </div>
             </div>
 
-            <div className="mb-4 rounded-[16px] border border-gray-100 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.03)] pb-4 pt-4 px-3">
-              <div className="grid grid-cols-7 gap-y-3 gap-x-1 justify-items-center">
+            <div className="mb-3 rounded-[16px] border border-gray-100 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.03)] pb-3 pt-3 px-2">
+              <div className="grid grid-cols-7 gap-y-2 gap-x-1 justify-items-center">
                 {[...Array(30)].map((_, i) => {
                   const day = i + 1;
                   const isSelected = tempSelectedDay === day;
@@ -497,10 +498,10 @@ export default function ReminderScreen() {
                       key={day}
                       onClick={() => setTempSelectedDay(day)}
                       className={cn(
-                        "flex h-[36px] w-[36px] shrink-0 items-center justify-center rounded-full text-[13px] transition-all",
+                        "flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full text-[13px] transition-all",
                         isSelected 
                           ? "bg-[#1839FF] text-white font-bold shadow-[0_4px_12px_rgba(24,57,255,0.3)] scale-110" 
-                          : "text-gray-700 font-medium bg-gray-50/50 border border-gray-100 hover:bg-gray-100 hover:border-gray-200"
+                          : "text-gray-700 font-medium bg-gray-50/50 border border-transparent hover:bg-gray-100"
                       )}
                     >
                       {day}
@@ -510,19 +511,23 @@ export default function ReminderScreen() {
               </div>
             </div>
             
-            <div className="mb-5 text-center">
-               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gray-50 text-[13px] font-semibold text-gray-600 border border-gray-200/60">
-                 <CalendarIcon className="w-4 h-4 text-gray-400" />
-                 Next alert on <span className="text-gray-900 font-bold">{tempSelectedDay ? getNextOccurrence(tempSelectedDay) : '--'}</span>
-               </span>
             </div>
 
-            <button
-              onClick={handleSetReminder}
-              className="w-full rounded-[16px] bg-[#1839FF] py-4 text-[16px] font-bold tracking-wide text-white transition-all active:scale-[0.98] hover:bg-[#0022E0] shadow-[0_8px_20px_rgba(24,57,255,0.25)] flex items-center justify-center gap-2"
-            >
-              Set Reminder
-            </button>
+            {/* Sticky/Fixed CTA area */}
+            <div className="mt-auto sticky bottom-0 bg-white pt-2 z-10 w-full mb-0 pb-1">
+               <div className="mb-3 text-center">
+                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gray-50 text-[12px] font-semibold text-gray-600 border border-gray-200/60">
+                   <CalendarIcon className="w-3.5 h-3.5 text-gray-400" />
+                   Next alert on <span className="text-gray-900 font-bold">{tempSelectedDay ? getNextOccurrence(tempSelectedDay) : '--'}</span>
+                 </span>
+               </div>
+               <button
+                 onClick={handleSetReminder}
+                 className="w-full rounded-[16px] bg-[#1839FF] py-3.5 text-[16px] font-bold tracking-wide text-white transition-all active:scale-[0.98] hover:bg-[#0022E0] shadow-[0_8px_20px_rgba(24,57,255,0.25)] flex items-center justify-center gap-2"
+               >
+                 Set Reminder
+               </button>
+            </div>
           </div>
         )}
       </BottomSheet>

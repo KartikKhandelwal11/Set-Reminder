@@ -43,6 +43,14 @@ export function BottomSheet({ isOpen, onClose, children, title, className }: Bot
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            drag="y"
+            dragElastic={{ top: 0, bottom: 1 }}
+            dragConstraints={{ top: 0, bottom: 0 }}
+            onDragEnd={(e, info) => {
+              if (info.offset.y > 100 || info.velocity.y > 500) {
+                onClose();
+              }
+            }}
             className={cn(
               "fixed bottom-0 left-0 right-0 z-50 flex flex-col rounded-t-3xl bg-white",
               "max-h-[calc(100dvh-120px)] pb-safe",
@@ -60,18 +68,8 @@ export function BottomSheet({ isOpen, onClose, children, title, className }: Bot
             </div>
 
             {/* Content area */}
-            <div className="flex-1 overflow-y-auto px-6 pb-6 pt-2">
+            <div className="flex-1 px-6 pb-6 pt-1">
               {children}
-            </div>
-
-            {/* Floating Close Button (above the sheet, matching the design) */}
-            <div className="absolute -top-14 left-1/2 -translate-x-1/2">
-              <button 
-                onClick={onClose}
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-900 text-white shadow-lg transition-transform hover:scale-105 active:scale-95"
-              >
-                <X className="h-5 w-5" />
-              </button>
             </div>
           </motion.div>
         </>
