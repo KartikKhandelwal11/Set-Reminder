@@ -14,7 +14,7 @@ export const mockAccounts: Account[] = [
     isReminderEnabled: false,
     reminderDay: null,
     colorHex: '#0072BC',
-    logoUrl: '/logos/SBI-Logo.png'
+    logoUrl: `${import.meta.env.BASE_URL}logos/SBI-Logo.png`
   },
   {
     id: '2',
@@ -28,7 +28,7 @@ export const mockAccounts: Account[] = [
     isReminderEnabled: false,
     reminderDay: null,
     colorHex: '#9A2B2E',
-    logoUrl: '/logos/idfc-first-bank--600.png'
+    logoUrl: `${import.meta.env.BASE_URL}logos/idfc-first-bank--600.png`
   },
   {
     id: '3',
@@ -41,7 +41,7 @@ export const mockAccounts: Account[] = [
     isReminderEnabled: false,
     reminderDay: null,
     colorHex: '#ED1C24',
-    logoUrl: '/logos/KOTAKBANK.NS-36440c5e.png'
+    logoUrl: `${import.meta.env.BASE_URL}logos/KOTAKBANK.NS-36440c5e.png`
   },
   {
     id: '4',
@@ -52,7 +52,7 @@ export const mockAccounts: Account[] = [
     isReminderEnabled: false,
     reminderDay: null,
     colorHex: '#9E3953',
-    logoUrl: '/logos/AXISBANK.BO-8f59e95b.png'
+    logoUrl: `${import.meta.env.BASE_URL}logos/AXISBANK.BO-8f59e95b.png`
   },
   {
     id: '5',
@@ -65,7 +65,7 @@ export const mockAccounts: Account[] = [
     isReminderEnabled: true,
     reminderDay: 14,
     colorHex: '#FBB03B',
-    logoUrl: '/logos/pnb-logo.png'
+    logoUrl: `${import.meta.env.BASE_URL}logos/pnb-logo.png`
   },
   {
     id: '6',
