@@ -44,8 +44,8 @@ export function BottomSheet({ isOpen, onClose, children, title, className }: Bot
             exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
             className={cn(
-              "fixed bottom-0 left-0 right-0 z-50 mt-24 flex flex-col rounded-t-3xl bg-white",
-              "max-h-[90vh] pb-safe",
+              "fixed bottom-0 left-0 right-0 z-50 flex flex-col rounded-t-3xl bg-white",
+              "max-h-[calc(100dvh-120px)] pb-safe",
               className
             )}
             // Constrain width on larger screens to match mobile layout
