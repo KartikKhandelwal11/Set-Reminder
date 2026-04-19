@@ -52,8 +52,8 @@ export function BottomSheet({ isOpen, onClose, children, title, className }: Bot
               }
             }}
             className={cn(
-              "fixed bottom-0 left-0 right-0 z-50 flex flex-col rounded-t-3xl bg-white",
-              "max-h-[calc(100dvh-120px)] pb-safe",
+              "fixed bottom-0 left-0 right-0 z-50 flex flex-col rounded-t-[32px] bg-white",
+              "max-h-[96dvh] pb-safe",
               className
             )}
             // Constrain width on larger screens to match mobile layout
@@ -68,7 +68,11 @@ export function BottomSheet({ isOpen, onClose, children, title, className }: Bot
             </div>
 
             {/* Content area */}
-            <div className="flex-1 px-6 pb-6 pt-1">
+            <div 
+              className="flex-1 overflow-y-auto px-6 pb-6 pt-1 no-scrollbar overscroll-contain"
+              onPointerDownCapture={(e) => e.stopPropagation()}
+              onTouchStartCapture={(e) => e.stopPropagation()}
+            >
               {children}
             </div>
           </motion.div>
